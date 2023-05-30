@@ -6,7 +6,6 @@
  *                                                                                                *
  ************************************************************************************************ */
 
-
 /**
  * Returns the 'Fizz','Buzz' or an original number using the following rules:
  * 1) return original number
@@ -27,10 +26,12 @@
  *  21 => 'Fizz'
  *
  */
-function getFizzBuzz(/* num */) {
-  throw new Error('Not implemented');
+function getFizzBuzz(num) {
+  if (num % 3 === 0 && num % 5 === 0) return 'FizzBuzz';
+  if (num % 3 === 0) return 'Fizz';
+  if (num % 5 === 0) return 'Buzz';
+  return num;
 }
-
 
 /**
  * Returns the factorial of the specified integer n.
@@ -43,10 +44,13 @@ function getFizzBuzz(/* num */) {
  *   5  => 120
  *   10 => 3628800
  */
-function getFactorial(/* n */) {
-  throw new Error('Not implemented');
+function getFactorial(n) {
+  const numsToMultiply = [];
+  for (let i = 1; i <= n; i += 1) {
+    numsToMultiply.push(i);
+  }
+  return numsToMultiply.reduce((acc, val) => acc * val, 1);
 }
-
 
 /**
  * Returns the sum of integer numbers between n1 and n2 (inclusive).
@@ -60,10 +64,13 @@ function getFactorial(/* n */) {
  *   5,10  =>  45 ( = 5+6+7+8+9+10 )
  *   -1,1  =>  0  ( = -1 + 0 + 1 )
  */
-function getSumBetweenNumbers(/* n1, n2 */) {
-  throw new Error('Not implemented');
+function getSumBetweenNumbers(n1, n2) {
+  const numsToSum = [];
+  for (let i = n1; i <= n2; i += 1) {
+    numsToSum.push(i);
+  }
+  return numsToSum.reduce((a, b) => a + b, 0);
 }
-
 
 /**
  * Returns true, if a triangle can be built with the specified sides a, b, c
@@ -80,10 +87,10 @@ function getSumBetweenNumbers(/* n1, n2 */) {
  *   10,1,1   =>  false
  *   10,10,10 =>  true
  */
-function isTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isTriangle(a, b, c) {
+  const condition = a + b > c && a + c > b && b + c > a;
+  return condition;
 }
-
 
 /**
  * Returns true, if two specified axis-aligned rectangles overlap, otherwise false.
@@ -121,7 +128,6 @@ function doRectanglesOverlap(/* rect1, rect2 */) {
   throw new Error('Not implemented');
 }
 
-
 /**
  * Returns true, if point lies inside the circle, otherwise false.
  * Circle is an object of
@@ -152,7 +158,6 @@ function isInsideCircle(/* circle, point */) {
   throw new Error('Not implemented');
 }
 
-
 /**
  * Returns the first non repeated char in the specified strings otherwise returns null.
  *
@@ -167,7 +172,6 @@ function isInsideCircle(/* circle, point */) {
 function findFirstSingleChar(/* str */) {
   throw new Error('Not implemented');
 }
-
 
 /**
  * Returns the string representation of math interval,
@@ -195,7 +199,6 @@ function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
   throw new Error('Not implemented');
 }
 
-
 /**
  * Reverse the specified string (put all chars in reverse order)
  *
@@ -212,7 +215,6 @@ function reverseString(/* str */) {
   throw new Error('Not implemented');
 }
 
-
 /**
  * Reverse the specified integer number (put all digits in reverse order)
  *
@@ -228,7 +230,6 @@ function reverseString(/* str */) {
 function reverseInteger(/* num */) {
   throw new Error('Not implemented');
 }
-
 
 /**
  * Validates the CCN (credit card number) and return true if CCN is valid
@@ -272,7 +273,6 @@ function getDigitalRoot(/* num */) {
   throw new Error('Not implemented');
 }
 
-
 /**
  * Returns true if the specified string has the balanced brackets and false otherwise.
  * Balanced means that is, whether it consists entirely of pairs of opening/closing brackets
@@ -298,7 +298,6 @@ function isBracketsBalanced(/* str */) {
   throw new Error('Not implemented');
 }
 
-
 /**
  * Returns the string with n-ary (binary, ternary, etc, where n <= 10)
  * representation of specified number.
@@ -323,7 +322,6 @@ function toNaryString(/* num, n */) {
   throw new Error('Not implemented');
 }
 
-
 /**
  * Returns the common directory path for specified array of full filenames.
  *
@@ -339,7 +337,6 @@ function toNaryString(/* num, n */) {
 function getCommonDirectoryPath(/* pathes */) {
   throw new Error('Not implemented');
 }
-
 
 /**
  * Returns the product of two specified matrixes.
@@ -362,7 +359,6 @@ function getCommonDirectoryPath(/* pathes */) {
 function getMatrixProduct(/* m1, m2 */) {
   throw new Error('Not implemented');
 }
-
 
 /**
  * Returns the evaluation of the specified tic-tac-toe position.
@@ -397,7 +393,6 @@ function getMatrixProduct(/* m1, m2 */) {
 function evaluateTicTacToePosition(/* position */) {
   throw new Error('Not implemented');
 }
-
 
 module.exports = {
   getFizzBuzz,
