@@ -143,8 +143,8 @@ function getStringsLength(arr) {
  *    [ 1, 3, 4, 5 ], 2, 1  => [ 1, 2, 3, 4, 5 ]
  *    [ 1, 'b', 'c'], 'x', 0  => [ 'x', 1, 'b', 'c' ]
  */
-function insertItem(/* arr, item, index */) {
-  throw new Error('Not implemented');
+function insertItem(arr, item, index) {
+  return arr.splice(index, 0, item);
 }
 
 /**
@@ -545,8 +545,11 @@ function selectMany(/* arr, childrenSelector */) {
  *   ['one','two','three'], [2]       => 'three'  (arr[2])
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
-function getElementByIndexes(/* arr, indexes */) {
-  throw new Error('Not implemented');
+function getElementByIndexes(arr, indexes, n = 0) {
+  function isArrayFlat(a) { return a.filter((el) => !Array.isArray(el)).length === a.length; }
+  const deepArray = arr[indexes[n]];
+  if (isArrayFlat(arr)) return deepArray;
+  return getElementByIndexes(deepArray, indexes, n + 1);
 }
 
 /**
@@ -567,8 +570,26 @@ function getElementByIndexes(/* arr, indexes */) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  const isLengthEven = arr.length % 2 === 0;
+  let head = [];
+  let tail = [];
+  let center = 0;
+  let centerIndex = 0;
+
+  if (arr.length === 0 || arr.length === 1) return arr;
+
+  if (isLengthEven) {
+    centerIndex = arr.length / 2;
+    head = arr.slice(0, centerIndex);
+    tail = arr.slice(-centerIndex);
+    return tail.concat(head);
+  }
+  centerIndex = (arr.length - 1) / 2;
+  head = arr.slice(0, centerIndex);
+  center = arr[centerIndex];
+  tail = arr.slice(-centerIndex);
+  return tail.concat(center, head);
 }
 
 module.exports = {
