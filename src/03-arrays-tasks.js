@@ -34,8 +34,10 @@ function findElement(arr, value) {
  *    2 => [ 1, 3 ]
  *    5 => [ 1, 3, 5, 7, 9 ]
  */
-function generateOdds(/* len */) {
-  throw new Error('Not implemented');
+function generateOdds(len, arr = [], n = 1) {
+  if (len === 0) return arr;
+  arr.push(n);
+  return generateOdds(len - 1, arr, n + 2);
 }
 
 /**
@@ -342,7 +344,8 @@ function sortDigitNamesByNumericOrder(arr) {
  */
 function getItemsSum(arr) {
   return arr.reduce(
-    (accumulator, currentValue) => accumulator + currentValue, 0,
+    (accumulator, currentValue) => accumulator + currentValue,
+    0,
   );
 }
 
