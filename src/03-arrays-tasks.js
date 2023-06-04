@@ -228,8 +228,18 @@ function toArrayOfSquares(arr) {
  *   [ 0, 0, 0, 0, 0]         => [ 0, 0, 0, 0, 0]
  *   [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] => [ 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 ]
  */
-function getMovingSum(/* arr */) {
-  throw new Error('Not implemented');
+function getMovingSum(arr, result = [], index = 0) {
+  let i = index;
+
+  if (i === 0) {
+    result.push(arr[i]);
+    i += 1;
+  } else {
+    result.push(arr[i] + result[i - 1]);
+    i += 1;
+  }
+
+  return i === arr.length ? result : getMovingSum(arr, result, i);
 }
 
 /**
@@ -424,8 +434,11 @@ function toStringList(arr) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  *    ]
  */
-function sortCitiesArray(/* arr */) {
-  throw new Error('Not implemented');
+function sortCitiesArray(arr) {
+  return arr.sort((a, b) => {
+    if (a.country === b.country) return a.city.localeCompare(b.city);
+    return a.country.localeCompare(b.country);
+  });
 }
 
 /**
@@ -512,9 +525,21 @@ function distinct(/* arr */) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {
-  throw new Error('Not implemented');
+function group(array, keySelector, valueSelector) {
+  return array.reduce((map, item) => {
+    const key = keySelector(item);
+    const value = valueSelector(item);
+
+    if (map.has(key)) {
+      map.get(key).push(value);
+    } else {
+      map.set(key, [value]);
+    }
+
+    return map;
+  }, new Map());
 }
+
 
 /**
  * Projects each element of the specified array to a sequence
@@ -529,8 +554,8 @@ function group(/* array, keySelector, valueSelector */) {
  *   [[1, 2], [3, 4], [5, 6]], (x) => x     =>   [ 1, 2, 3, 4, 5, 6 ]
  *   ['one','two','three'], (x) => x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
-function selectMany(/* arr, childrenSelector */) {
-  throw new Error('Not implemented');
+function selectMany(arr, childrenSelector) {
+  return arr.flatMap(childrenSelector);
 }
 
 /**
@@ -546,7 +571,9 @@ function selectMany(/* arr, childrenSelector */) {
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
 function getElementByIndexes(arr, indexes, n = 0) {
-  function isArrayFlat(a) { return a.filter((el) => !Array.isArray(el)).length === a.length; }
+  function isArrayFlat(a) {
+    return a.filter((el) => !Array.isArray(el)).length === a.length;
+  }
   const deepArray = arr[indexes[n]];
   if (isArrayFlat(arr)) return deepArray;
   return getElementByIndexes(deepArray, indexes, n + 1);
