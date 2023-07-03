@@ -344,8 +344,35 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const stack = [];
+  const openingBrackets = ['[', '(', '{', '<'];
+  const closingBrackets = [']', ')', '}', '>'];
+  const matchingBrackets = {
+    ']': '[',
+    ')': '(',
+    '}': '{',
+    '>': '<',
+  };
+
+  for (let i = 0; i < str.length; i += 1) {
+    const bracket = str[i];
+
+    if (openingBrackets.includes(bracket)) {
+      stack.push(bracket);
+    } else if (closingBrackets.includes(bracket)) {
+      if (stack.length === 0) {
+        return false;
+      }
+
+      const lastBracket = stack.pop();
+      if (matchingBrackets[bracket] !== lastBracket) {
+        return false;
+      }
+    }
+  }
+
+  return stack.length === 0;
 }
 
 /**
@@ -368,8 +395,17 @@ function isBracketsBalanced(/* str */) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  let number = num;
+  let result = '';
+
+  while (number > 0) {
+    const remainder = number % n;
+    result += remainder.toString();
+    number = Math.floor(number / n);
+  }
+
+  return result.split('').reverse().join('');
 }
 
 /**
@@ -384,8 +420,25 @@ function toNaryString(/* num, n */) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  if (pathes.length === 0) {
+    return '';
+  }
+
+  const firstPathComponents = pathes[0].split('/');
+  let commonPath = '';
+
+  for (let i = 0; i < firstPathComponents.length; i += 1) {
+    const currentComponent = firstPathComponents[i];
+
+    if (pathes.every((path) => path.split('/')[i] === currentComponent)) {
+      commonPath += `${currentComponent}/`;
+    } else {
+      break;
+    }
+  }
+
+  return commonPath;
 }
 
 /**
@@ -440,8 +493,24 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  const winningCombinations = [
+    [position[0][0], position[0][1], position[0][2]],
+    [position[1][0], position[1][1], position[1][2]],
+    [position[2][0], position[2][1], position[2][2]],
+    [position[0][0], position[1][0], position[2][0]],
+    [position[0][1], position[1][1], position[2][1]],
+    [position[0][2], position[1][2], position[2][2]],
+    [position[0][0], position[1][1], position[2][2]],
+    [position[0][2], position[1][1], position[2][0]],
+  ];
+
+  const winner = winningCombinations.find((combination) => {
+    const [cell1, cell2, cell3] = combination;
+    return cell1 && cell2 && cell3 && cell1 === cell2 && cell1 === cell3;
+  });
+
+  return winner ? winner[0] : undefined;
 }
 
 module.exports = {
