@@ -23,10 +23,9 @@
  *   getComposition(Math.sin, Math.asin)(x) => Math.sin(Math.asin(x))
  *
  */
-function getComposition(/* f, g */) {
-  throw new Error('Not implemented');
+function getComposition(f, g) {
+  return (value) => f(g(value));
 }
-
 
 /**
  * Returns the math power function with the specified exponent
@@ -44,8 +43,10 @@ function getComposition(/* f, g */) {
  *   power05(16) => 4
  *
  */
-function getPowerFunction(/* exponent */) {
-  throw new Error('Not implemented');
+function getPowerFunction(exponent) {
+  return function foo(value) {
+    return value ** exponent;
+  };
 }
 
 
@@ -62,8 +63,17 @@ function getPowerFunction(/* exponent */) {
  *   getPolynom(8)     => y = 8
  *   getPolynom()      => null
  */
-function getPolynom() {
-  throw new Error('Not implemented');
+function getPolynom(...coefficients) {
+  if (coefficients.length === 0) return null;
+
+  return function foo(value) {
+    let result = 0;
+
+    for (let i = 0; i < coefficients.length; i += 1) {
+      result += coefficients[i] * (value ** (coefficients.length - 1 - i));
+    }
+    return result;
+  };
 }
 
 
@@ -81,8 +91,15 @@ function getPolynom() {
  *   ...
  *   memoizer() => the same random number  (next run, returns the previous cached result)
  */
-function memoize(/* func */) {
-  throw new Error('Not implemented');
+function memoize(func) {
+  let savedResult = null;
+
+  return function foo() {
+    if (!savedResult) {
+      savedResult = func();
+    }
+    return savedResult;
+  };
 }
 
 
@@ -101,8 +118,17 @@ function memoize(/* func */) {
  * }, 2);
  * retryer() => 2
  */
-function retry(/* func, attempts */) {
-  throw new Error('Not implemented');
+function retry(func, attempts) {
+  return function foo() {
+    for (let i = 0; i < attempts; i += 1) {
+      try {
+        return func();
+      } catch (error) {
+        //
+      }
+    }
+    throw new Error('');
+  };
 }
 
 
@@ -169,8 +195,13 @@ function partialUsingArguments(/* fn, ...args1 */) {
  *   getId4() => 7
  *   getId10() => 11
  */
-function getIdGeneratorFunction(/* startFrom */) {
-  throw new Error('Not implemented');
+function getIdGeneratorFunction(startFrom) {
+  let nextId = startFrom;
+  return function generateId() {
+    const id = nextId;
+    nextId += 1;
+    return id;
+  };
 }
 
 
